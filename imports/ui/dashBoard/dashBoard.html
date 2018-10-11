@@ -1,11 +1,48 @@
 <template name = 'dashBoard'>
     <div>
         {{#if currentUser}}
-          <h1>{{{cUser}}} WELCOME TO DASHBOARD </h1>
-          <br> {{>inputButton  name = "dashBoardLoginOut" class ="loginUser" value = "Login Out" }} 
+          <p>{{{cUser}}} WELCOME TO DASHBOARD </p>
+           {{>inputButton  name = "dashBoardLoginOut" class ="loginUser" value = "Login Out" }} 
+           <div class="container">
+            <header>
+              <h1>Todo List</h1>
+            </header>
+
+<!--             <label class="hide-completed">
+              <input type="checkbox" />
+              Hide Completed Tasks
+            </label> -->
+
+
+            <form class="new-task">
+              <input type="text" name="text" placeholder="Type to add new tasks" />
+            </form>
+            <ul>
+              {{#each tasks}}
+                {{> task}}
+              {{/each}}
+            </ul>
+          </div>
         {{else}}
           <h1 style="background:red ">You are not Logged In Please Login to Continue.</h1>
           {{>login}}
         {{/if}}
     </div>
 </template> 
+
+
+
+<!-- in task.html <template name="task">
+  <li class="{{#if checked}}checked{{/if}}">
+    <button class="delete">&times;</button>
+ 
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+ 
+    <span class="text">{{text}}</span>
+  </li>
+</template> -->
+
+
+<!-- <template name="task">
+  <li>{{text}}</li>
+</template> -->
