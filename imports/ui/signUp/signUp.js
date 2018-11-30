@@ -28,9 +28,9 @@ Template.signUp.events({
 
     Meteor.call('registerUser', userSignUp, citySignUp, addressSignUp, ageSignUp, passwordSignUp, (err, res) => {
       if (err) {
-        // console.log(err);
+         console.log(err);
       } else {
-        // console.log(res);
+         console.log(res);
       }
     });
   },

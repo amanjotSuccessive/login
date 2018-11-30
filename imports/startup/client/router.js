@@ -25,6 +25,13 @@ FlowRouter.route('/signUp', {
   name: 'signUp',
 });
 
+
+FlowRouter.route('/get', {
+  action: () => {
+    BlazeLayout.render('mainLayout', { header: 'header', main: 'get', 'temp': 'checking' });
+  },
+  name: 'get',
+});
 /*
 function for defining route 'DashBoard'
 This feature is only available for registered Users.

@@ -1,0 +1,26 @@
+<template name='get'>
+    {{#if currentUser}}
+    <form class='getForm'>
+        <br> {{>inputField label="Get Url :" name="getInput" class="get" id="getInput" validate=false}}
+        <br>
+        {{>inputButton name = "getName" class ="getButton" value = "Hit Get" id="getHit"}}
+        <ul>
+            <li><br></li>
+            {{#each ob in Obj}}
+            <!--  <li>{{> clickDisplay title=ob.title}}</li> -->
+            <!-- <li> <a onclick="M.toast({html: '{{ob.title}}'})" class="btn">userId: {{ob.userId}} </a></li> -->
+            <li> <button class="btn click" value='{{ob.userId}}'>userId: {{ob.userId}} </button>{{#if active ob.userId}}{{> clickDisplay title=ob.title}}{{/if}}</li>
+            <li><br></li>
+            {{/each}}
+        </ul>
+    </form>
+    {{else}}
+    {{!redirect}}
+    {{/if}}
+</template>
+
+<template name="clickDisplay">
+    <span class="container">
+        {{title}}
+    </span>
+</template>

@@ -1,5 +1,13 @@
 <template name = "inputSelect">
-<select name = {{name}}>
+
+        <div class="input-field browser-default col s12">
+                <select>
+                  <option value="3">Option 3</option>
+                </select>
+                <label></label>
+              </div>
+
+    <select name = {{name}}>
 {{#each runner}}
     <option value={{age}} >{{age}}</option>
 {{/each}}

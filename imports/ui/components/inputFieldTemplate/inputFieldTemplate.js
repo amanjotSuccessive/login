@@ -11,7 +11,7 @@ Template.inputField.helpers({
    return Template.instance().low.get();
   }
 });
-Template.inputField.events({
+/* Template.inputField.events({
   'change'(event) {
     event.preventDefault();
     console.log(event.target.value);
@@ -20,7 +20,7 @@ Template.inputField.events({
     let errorVar = validate(Template.instance().data.id);
     Template.instance().low.set(errorVar);
   }
-});
+}); */
 
 
 

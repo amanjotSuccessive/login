@@ -21,7 +21,7 @@ Template.login.events({
         alert('Something went wrong');
       }
       else {
-        FlowRouter.go('/dashBoard');
+        FlowRouter.go('/get');
       //  $('body').ready(function () {
        //   alert('Only Numbers');
        // }); 

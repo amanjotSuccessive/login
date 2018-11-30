@@ -1,8 +1,15 @@
-<template name = 'mainLayout'>
-    {{> Template.dynamic template = main}}            
-    {{> Template.dynamic template = header }}
-</template>
-
-<template name='header'>
-        <h1>FOOTER</h1>
+<template name='mainLayout'>
+    <nav class="nav-extended">
+        <div class="nav-wrapper">
+            <span align="center">Api HIT</span>
+             {{#if currentUser}}
+        <span align="right">{{{cUser}}} 
+         {{>inputButton align="right" name = "getlogout" value = "Logout" id="logoutget"}} </span>
+        {{/if}}
+        </div>
+    </nav>
+    <div class="main">
+        {{> Template.dynamic template=header}}
+        {{> Template.dynamic template=main data=temp}}
+    </div>
 </template>
