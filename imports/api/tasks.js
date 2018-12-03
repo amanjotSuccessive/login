@@ -1,8 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
- 
+
 export const Tasks = new Mongo.Collection('tasks');
+export const ApiInsert = new Mongo.Collection('apiInsert');
 
 //required in case of pub sub 
 if (Meteor.isServer) {
@@ -27,5 +28,24 @@ Meteor.methods({
       owner: Meteor.userId(),
       username: Meteor.user().username,
     });
+    },
+
+  'ApiInsert'(data){
+    if(!Meteor.userId()){
+      throw new Meteor.Error('not-authorized');
+    }
+    ApiInsert.insert(data);
+    console.log("Insert....server.......",data)
+
+  },
+
+  'ApiFind'(){
+    if(!Meteor.userId()){
+      throw new Meteor.Error('not-authorized');
+    }
+   const apiFind = ApiInsert.find();
+   console.log("Find...server......",apiFind);
+   return  apiFind.fetch();
   }
+
 });

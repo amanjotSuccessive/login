@@ -1,41 +1,63 @@
+import './get.html'
 import { Template } from 'meteor/templating';
 import { HTTP } from 'meteor/http'
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { ReactiveVar } from 'meteor/reactive-var';
-const Obj = new Mongo.Collection(null);
-import './get.html'
+//import { ApiInsert } from '../../../api/task.js';
 let ob = null;
-let _title= new ReactiveVar(false);
+const Obj = new Mongo.Collection(null);
+//1 const ApiInsertClient = new Mongo.Collection('apiInsert')
+let _title = new ReactiveVar(false);
 
 Template.get.events({
-
-    'click .click'(event){
+    'click .click'(event) {
         event.preventDefault();
         _title.set(event.target.value)
-        
+
     },
     'click #getHit'(event) {
         event.preventDefault();
         let val = $('#getInput').val()
         HTTP.call('GET', val || 'https://jsonplaceholder.typicode.com/posts/', {
             params: {
-              // "id": 5
+                "id": 5
             }
         }, function (error, response) {
             if (error) {
             } else {
                 ob = response.data;
-                ob.forEach(element => {
-                    let data = {
-                        _id: element.id.toString(),
-                        userId: element.id,
-                        title: element.title
-                    }
-                    Obj.insert(data);
-                });
+                console.log("ob", ob)
+                if (!ob.length) {
+                    console.log("in if block")
+                    Meteor.call('ApiInsert', ob)
+                }
+                else {
+                    console.log("in else block")
+                    ob.forEach(element => {
+                        let data = {
+                            // _id: element.id.toString(),
+                            userId: element.id,
+                            title: element.title
+                        }
+                        //Obj.insert(data);   doing it when Mongo.Collection(null) else
+
+                        Meteor.call('ApiInsert', data, (error, result) => {
+                            if (error) {
+                                console.log('error ::', error)
+                            }
+                            else
+                                console.log('result :: ', result)
+                        });
+                    })
+                }
+                Meteor.call('ApiFind', (err, res) => {
+                    console.log('err--'.err);
+                    console.log('res--'.res);
+                })
             }
         });
+
     },
     'click #logoutget'(event) {
         Meteor.logout(function (err) {
@@ -49,24 +71,23 @@ Template.get.events({
     }
 });
 
-Template.get.onCreated(function () {
-    //console.log('-------', Template.currentData());
-})
-
 Template.get.helpers({
     Obj() {
-        return Obj.find({});
+        Meteor.call('ApiFind', (error, result) => {
+            if (error) {
+                console.log('error: apIFind:: ', error)
+            }
+            else {
+                console.log('result:apiFind:: ', result);
+            }
+        })
+        //1 return ApiInsertClient.find({})
+        //return Obj.find({});
     },
-
     redirect() {
         FlowRouter.go('/login');
-    
     },
     active(id) {
-        //  Blaze.render('clickDisplay', document.getElementsByTagName("body"))
-        //return `  <strong>${_title.get()}</strong>`
-        console.log("active",_title.get(),id)
-        console.log(Number(_title.get())===id)
-        return Number(_title.get())===id
+        return Number(_title.get()) === id
     }
 })
